@@ -20,6 +20,8 @@ services:
         environment:
         - "DB_PORT=3306"
         - "DB_HOST=mysql"
+        - PHP_IDE_CONFIG=serverName=board-server
+        - XDEBUG_CONFIG=remote_host=10.6.0.105
         depends_on:
         - mysql
         networks:
