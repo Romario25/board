@@ -1,0 +1,34 @@
+FROM php:7.1-fpm
+
+RUN apt-get update && apt-get install -y libmcrypt-dev mysql-client cron supervisor imagemagick libmagickwand-dev libjpeg62-turbo-dev libpng-dev libgd-dev  && pecl install imagick \
+    && docker-php-ext-configure gd \
+            --enable-gd-native-ttf \
+            --with-jpeg-dir=/usr/lib \
+            --with-freetype-dir=/usr/include/freetype2  \
+        && docker-php-ext-install mcrypt pdo_mysql gd && echo "extension=imagick.so" > /usr/local/etc/php/conf.d/ext-imagick.ini
+
+ADD ./php/default.ini /usr/local/etc/php/conf.d/default.ini
+
+#CRON
+
+ADD ./php/crontab /etc/cron.d/schedule-cron
+
+RUN chmod 0644 /etc/cron.d/schedule-cron
+
+RUN touch /var/log/cron.log
+
+
+COPY ./php/supervisord.conf /etc/supervisor/conf.d/supervisord.conf
+
+# XDEBUG
+RUN pecl install xdebug
+
+RUN docker-php-ext-enable xdebug
+
+ADD ./php/xdebug.ini /usr/local/etc/php/conf.d/docker-php-ext-xdebug.ini
+
+
+
+WORKDIR /app
+
+CMD ["/usr/bin/supervisord"]

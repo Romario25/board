@@ -1,0 +1,7 @@
+1) В настройках в разделе Directories отметить папки
+bootstrap/cache
+storage
+App
+Test
+
+2) Установить laravel plugin и затем его активировать Language - Php - Laravel

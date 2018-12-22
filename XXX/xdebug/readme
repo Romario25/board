@@ -1,0 +1,29 @@
+DOCKER FILE fpm
+
+RUN docker-php-ext-install
+
+RUN pecl install xdebug
+
+RUN docker-php-ext-enable xdebug
+
+ADD ./php/xdebug.ini /usr/local/etc/php/conf.d/docker-php-ext-xdebug.ini
+
+input file xdebug.ini
+
+docker-compose.yml
+добавить переменные окружения
+php-fpm:
+        build:
+            context: ./docker
+            dockerfile: php-fpm.docker
+        volumes:
+            - ./www:/app
+        environment:
+          - "DB_PORT=3306"
+          - "DB_HOST=mysql"
+          - PHP_IDE_CONFIG=serverName=callrecorder
+          - XDEBUG_CONFIG=remote_host=10.4.0.105
+        depends_on:
+            - mysql
+        networks:
+            callrecorder-project:
