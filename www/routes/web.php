@@ -13,11 +13,9 @@
 
 Route::get('/', function () {
 
-    $a = 3;
-
-    $b = $a + 3;
-
-
-
     return view('welcome');
 });
+
+Auth::routes();
+
+Route::get('/home', 'HomeController@index')->name('home');

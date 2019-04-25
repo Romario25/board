@@ -1,0 +1,15 @@
+1) npm install
+2) весь код пишется в resource/assets
+3) Настройка зборки css and js происходит в webpack.mix.js
+4) добавляем папку public/build
+5) Настраиваем webpack.mix.js
+    mix
+        .setPublicPath('public/build')
+        .setResourceRoot('/build/')
+        .js('resources/assets/js/app.js', 'js')
+        .sass('resources/assets/sass/app.scss', 'css')
+        .version();
+
+6) В layouts прописываем пути до css и js
+    mix('js/app.js', 'build')
+    mix('css/app.css', 'build')
