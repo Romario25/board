@@ -1,5 +1,6 @@
 <?php
 
+use App\Entities\User;
 use Illuminate\Support\Facades\Schema;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
@@ -18,6 +19,8 @@ class CreateUsersTable extends Migration
             $table->string('name');
             $table->string('email')->unique();
             $table->string('password');
+            $table->string('verified_token')->nullable()->unique();
+            $table->string('status', 16)->default(User::STATUS_WAIT);
             $table->rememberToken();
             $table->timestamps();
         });
