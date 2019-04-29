@@ -2,3 +2,4 @@
 /mysql
 .idea
 /www/vendor
+/www/public/build
